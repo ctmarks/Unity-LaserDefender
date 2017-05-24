@@ -6,16 +6,18 @@ public class PlayerController : MonoBehaviour {
 
     public float speed = 5.0f;
     public float padding = 1.0f;
+    public GameObject laser;
+    public float projectileSpeed;
 
     private float xmin, xmax;
 
     void Start() {
-        
     }
 	
 	// Update is called once per frame
 	void Update () {
         PlayerMove();
+        PlayerFire();
 	}
 
     void PlayerMove() {
@@ -44,5 +46,13 @@ public class PlayerController : MonoBehaviour {
         
 
         this.transform.position = new Vector3(newX, this.transform.position.y, 0.0f);
+    }
+
+    void PlayerFire() {
+        if (Input.GetMouseButtonDown(0)) {
+            GameObject beam = Instantiate(laser, this.transform.position, Quaternion.identity) as GameObject;
+            Rigidbody2D rigid = beam.GetComponent<Rigidbody2D>();
+            rigid.velocity = new Vector3(0.0f, projectileSpeed, 0.0f);
+        }
     }
 }
